@@ -1,40 +1,7 @@
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
-
-const typeDefs = `#graphql
-  type Book {
-    id:String
-    title: String
-    author: String
-  }
-
-
-  type Query {
-    books: [Book]
-    book(bookId:ID!):Book
-  }
-`;
-const books = [
-  {
-    id: "1",
-    title: "The Awakening",
-    author: "Kate Chopin",
-  },
-  {
-    id: "1",
-    title: "City of Glass",
-    author: "Paul Auster",
-  },
-];
-const resolvers = {
-  Query: {
-    books: () => books,
-    book: (parent: any, args: { bookId: String }, context: any) => {
-      const result = books.find((db) => db.id === args.bookId);
-      return result;
-    },
-  },
-};
+import { typeDefs } from "./src/gql/schema/index.js";
+import { resolvers } from "./src/gql/resolvers/index.js";
 
 const server = new ApolloServer({
   typeDefs,
